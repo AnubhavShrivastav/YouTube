@@ -6,9 +6,6 @@ import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import HistoryIcon from "@mui/icons-material/History";
 
 function Navbar() {
-
-
-
   return (
     <div className="sm: grid-cols-12 mt-1">
       <div className="sm: col-span-4 pl-6">
@@ -17,7 +14,7 @@ function Navbar() {
           className="sm: cursor-pointer hover:bg-gray-200"
         />
 
-        <YouTubeIcon         
+        <YouTubeIcon
           className="sm: inline cursor-pointer ml-5"
           fontSize="large"
           sx={{ color: "red" }}

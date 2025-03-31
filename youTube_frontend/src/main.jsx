@@ -8,7 +8,7 @@ const CLIENT_ID =
   "1051422118866-emfokgnbcnjofnsvior33h24gfr8n6qi.apps.googleusercontent.com";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  <StrictMode>     
     <GoogleOAuthProvider clientId={CLIENT_ID}>
       <App />
     </GoogleOAuthProvider>
