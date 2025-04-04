@@ -1,6 +1,9 @@
 import ReactPlayer from "react-player";
+import { useParams } from "react-router-dom";
 
-function VideoPlayer({ videoId }) {
+function VideoPlayer() {
+  const { videoId } = useParams();
+
   if (!videoId) return <p>No video selected</p>; // Don't show anything if no video is selected
 
   return (
