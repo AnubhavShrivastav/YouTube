@@ -1,24 +1,41 @@
 import ReactPlayer from "react-player";
 import { useParams } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const API_KEY = "AIzaSyB4Iql_eX6RNxnlo9QRu063RhZEexhmrsE";
-
 
 function VideoPlayer() {
   const { videoId } = useParams();
   const [videoTitle, setVideoTitle] = useState("");
   const [comments, setComments] = useState([]);
+  const [channelName, setChannelName] = useState("");
+  const [description, setDescription] = useState("");
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [LikeCount, setLikeCount] = useState("");
+  const [viewCount, setViewCount] = useState("");
+  const [publishDate, setPublishDate] = useState("");
 
   useEffect(() => {
     // Fetch video title
     const fetchVideoDetails = async () => {
       try {
         const res = await fetch(
-          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${API_KEY}`
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=${videoId}&key=${API_KEY}`
         );
         const data = await res.json();
         setVideoTitle(data.items[0]?.snippet?.title || "No Title Found");
+        setChannelName(
+          data.items[0]?.snippet?.channelTitle || "Unknown Channel"
+        );
+        setDescription(
+          data.items[0]?.snippet?.description || "No Description Found"
+        );
+        setViewCount(data.items[0]?.statistics?.viewCount || "0");
+        setLikeCount(data.items[0]?.statistics?.likeCount || "0");
+        const formattedDate = new Date(
+          data.items[0]?.snippet?.publishedAt
+        ).toLocaleDateString();
+        setPublishDate(formattedDate);
       } catch (error) {
         console.error("Error fetching video details:", error);
       }
@@ -41,6 +58,10 @@ function VideoPlayer() {
     fetchComments();
   }, [videoId]);
 
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
   if (!videoId) return <p>No video selected</p>; // Don't show anything if no video is selected
 
   return (
@@ -49,9 +70,32 @@ function VideoPlayer() {
         controls={true}
         url={`https://www.youtube.com/watch?v=${videoId}`}
         height={500}
-        width={800}
+        width={900}
       />
-      <h1 className="text-xl font-bold mb-4  mt-5">{videoTitle}</h1>
+      <h1 className="text-xl font-bold mb-4 mt-5">{videoTitle}</h1>
+
+      <div className="bg-gray-50  rounded-2xl p-3">
+        <p className="text-gray-600 text-sm mb-1">By: {channelName}</p>
+        <p className="text-gray-500 text-sm mb-2">
+          {Number(viewCount).toLocaleString()} views •{" "}
+          {Number(LikeCount).toLocaleString()} likes
+        </p>
+
+        <p className="text-sm text-gray-500 mt-1">Published on {publishDate}</p>
+
+        <p className="text-gray-700 text-sm mb-4 whitespace-pre-line">
+          {showFullDescription
+            ? description
+            : `${description.slice(0, 150)}...`}
+        </p>
+      </div>
+
+      <button
+        onClick={toggleDescription}
+        className="flex start-0 text-blue-500 text-sm mt-1 focus:outline-none"
+      >
+        {showFullDescription ? "Show less" : "Show more"}
+      </button>
 
       <div className="mt-6 max-w-4xl">
         <h2 className="text-lg font-semibold mb-2">Top Comments</h2>
