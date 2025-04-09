@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const API_KEY = "AIzaSyB4Iql_eX6RNxnlo9QRu063RhZEexhmrsE";
 
-const RandomVideos = () => {
+const RandomVideos = ({ searchQuery }) => {
   const [videos, setVideos] = useState([]);
   const [pageToken, setPageToken] = useState("");
   const navigate = useNavigate();
@@ -19,18 +19,27 @@ const RandomVideos = () => {
         "travel",
         "doremon",
       ];
-      const randomQuery =
+
+      const query =
+        searchQuery ||
         randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
 
-      let url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&part=snippet&type=video&maxResults=10&q=${randomQuery}`;
+      // const randomQuery =
+      //   randomKeywords[Math.floor(Math.random() * randomKeywords.length)];
+
+      let url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&part=snippet&type=video&maxResults=10&q=${query}`;
       if (pageToken) url += `&pageToken=${pageToken}`;
 
       const response = await fetch(url);
       const data = await response.json();
-
       if (data.items) {
-        setVideos([...videos, ...data.items.map((item) => item.id.videoId)]);
-        setPageToken(data.nextPageToken || "");
+        setVideos(
+          data.items.map((item) => ({
+            id: item.id.videoId,
+            title: item.snippet.title,
+            thumbnail: item.snippet.thumbnails.medium.url,
+          }))
+        );
       }
     } catch (error) {
       console.error("Error fetching videos:", error);
@@ -39,22 +48,23 @@ const RandomVideos = () => {
 
   useEffect(() => {
     fetchVideos();
-  }, []);
+  }, [searchQuery]);
 
   return (
     <div className="flex-1 p-4 overflow-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-        {videos.map((videoId, index) => (
+        {videos.map((video) => (
           <div
-            key={index}
+            key={video.id}
             className="cursor-pointer"
-            onClick={() => navigate(`/watch/${videoId}`)}
+            onClick={() => navigate(`/watch/${video.id}`)}
           >
             <img
-              src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-              alt="Thumbnail"
+              src={video.thumbnail}
+              alt={video.title}
               className="w-full h-52 rounded-lg shadow-md"
             />
+            <h3 className="text-sm font-semibold mt-2">{video.title}</h3>
           </div>
         ))}
       </div>
