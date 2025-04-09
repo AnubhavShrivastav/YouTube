@@ -6,7 +6,6 @@ import { jwtDecode } from "jwt-decode";
 import React, { useState } from "react";
 
 function TopBar({ onSearch }) {
-
   const [input, setInput] = useState("");
 
   const handleSubmit = (e) => {
@@ -15,7 +14,6 @@ function TopBar({ onSearch }) {
       onSearch(input); // Send input back to parent
     }
   };
-
 
   return (
     <div className="flex flex-col h-screen">
@@ -37,21 +35,20 @@ function TopBar({ onSearch }) {
 
         {/* Middle - Search */}
         <form onSubmit={handleSubmit}>
-        <div className="hidden sm:flex flex-grow max-w-xl mx-4">
-          
-          <input
-            className="flex-grow p-2 pl-4 rounded-l-full border border-gray-200 outline-none"
-            type="text"
-            placeholder="Search"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <div className="bg-gray-100 p-3 rounded-r-full cursor-pointer hover:bg-gray-200">
-           <button type="submit">
-            <img src="images/search-1.svg" className="w-5 h-5" />
-            </button>
+          <div className="hidden sm:flex flex-grow max-w-xl mx-4">
+            <input
+              className="flex-grow p-2 pl-4 rounded-l-full border border-gray-200 outline-none"
+              type="text"
+              placeholder="Search"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <div className="bg-gray-100 p-3 rounded-r-full cursor-pointer hover:bg-gray-200">
+              <button type="submit">
+                <img src="images/search-1.svg" className="w-5 h-5" />
+              </button>
+            </div>
           </div>
-        </div>
         </form>
 
         {/* Right - Actions */}

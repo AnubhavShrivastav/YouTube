@@ -32,14 +32,16 @@ const RandomVideos = ({ searchQuery }) => {
 
       const response = await fetch(url);
       const data = await response.json();
+
       if (data.items) {
-        setVideos(
-          data.items.map((item) => ({
-            id: item.id.videoId,
-            title: item.snippet.title,
-            thumbnail: item.snippet.thumbnails.medium.url,
-          }))
-        );
+        const newVideos = data.items.map((item) => ({
+          id: item.id.videoId,
+          title: item.snippet.title,
+          thumbnail: item.snippet.thumbnails.high.url,
+        }));
+
+        setVideos((prevVideos) => [...prevVideos, ...newVideos]);
+        setPageToken(data.nextPageToken || "");
       }
     } catch (error) {
       console.error("Error fetching videos:", error);

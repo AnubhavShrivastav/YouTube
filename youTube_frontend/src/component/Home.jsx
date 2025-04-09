@@ -13,7 +13,7 @@ function Home() {
       <div className="flex flex-1">
         <SideBar />
 
-        <RandomVideos searchQuery={searchQuery}/>
+        <RandomVideos searchQuery={searchQuery} />
       </div>
     </div>
   );
