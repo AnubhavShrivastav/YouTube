@@ -37,15 +37,15 @@ function TopBar({ onSearch }) {
         <form onSubmit={handleSubmit}>
           <div className="hidden sm:flex flex-grow max-w-xl mx-4">
             <input
-              className="flex-grow p-2 pl-4 rounded-l-full border border-gray-200 outline-none"
+              className="w-xl h-[40px] mt-1 border border-gray-700 rounded-l-4xl p-3 text-lg "
               type="text"
               placeholder="Search"
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
-            <div className="bg-gray-100 p-3 rounded-r-full cursor-pointer hover:bg-gray-200">
+            <div className="bg-gray-100 h-10 w-14 mt-1 rounded-r-full cursor-pointer ">
               <button type="submit">
-                <img src="images/search-1.svg" className="w-5 h-5" />
+                <img src="images/search-1.svg" className="w-5 h-10 ml-3 cursor-pointer" />
               </button>
             </div>
           </div>

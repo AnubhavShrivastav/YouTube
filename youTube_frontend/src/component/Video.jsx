@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_KEY = "AIzaSyB4Iql_eX6RNxnlo9QRu063RhZEexhmrsE";
+const API_KEY = "AIzaSyC6kuE00v2qYG8gGZXLNhCSxxpHrwCU96c";
 
 const RandomVideos = ({ searchQuery }) => {
   const [videos, setVideos] = useState([]);
@@ -38,6 +38,8 @@ const RandomVideos = ({ searchQuery }) => {
           id: item.id.videoId,
           title: item.snippet.title,
           thumbnail: item.snippet.thumbnails.high.url,
+          channelName: item.snippet.channelTitle,
+          
         }));
 
         setVideos((prevVideos) => [...prevVideos, ...newVideos]);
@@ -67,6 +69,8 @@ const RandomVideos = ({ searchQuery }) => {
               className="w-full h-52 rounded-lg shadow-md"
             />
             <h3 className="text-sm font-semibold mt-2">{video.title}</h3>
+            <p className="text-sm">{video.channelName}</p>
+            
           </div>
         ))}
       </div>
