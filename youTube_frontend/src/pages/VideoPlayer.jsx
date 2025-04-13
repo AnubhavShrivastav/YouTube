@@ -2,7 +2,7 @@ import ReactPlayer from "react-player";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const API_KEY = "AIzaSyB4Iql_eX6RNxnlo9QRu063RhZEexhmrsE";
+const API_KEY = "AIzaSyC6kuE00v2qYG8gGZXLNhCSxxpHrwCU96c";
 
 function VideoPlayer() {
   const { videoId } = useParams();
@@ -102,7 +102,7 @@ function VideoPlayer() {
         {comments.length > 0 ? (
           <ul className="space-y-4">
             {comments.map((comment, index) => (
-              <li key={index} className="bg-gray-100 p-4 rounded shadow-sm">
+             <li key={index} className="bg-gray-100 p-4 rounded shadow-sm">
                 <p className="font-medium">
                   {comment.snippet.topLevelComment.snippet.authorDisplayName}
                 </p>
@@ -111,7 +111,7 @@ function VideoPlayer() {
             ))}
           </ul>
         ) : (
-          <p>No comments available</p>
+            <p>No comments available</p>
         )}
       </div>
     </div>

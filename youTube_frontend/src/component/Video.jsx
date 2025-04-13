@@ -39,7 +39,6 @@ const RandomVideos = ({ searchQuery }) => {
           title: item.snippet.title,
           thumbnail: item.snippet.thumbnails.high.url,
           channelName: item.snippet.channelTitle,
-          
         }));
 
         setVideos((prevVideos) => [...prevVideos, ...newVideos]);
@@ -70,7 +69,6 @@ const RandomVideos = ({ searchQuery }) => {
             />
             <h3 className="text-sm font-semibold mt-2">{video.title}</h3>
             <p className="text-sm">{video.channelName}</p>
-            
           </div>
         ))}
       </div>

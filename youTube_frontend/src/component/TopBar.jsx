@@ -4,16 +4,21 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function TopBar({ onSearch }) {
-  const [input, setInput] = useState("");
+
+function TopBar() {
+  const [searchInput, setSearchInput] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (input.trim()) {
-      onSearch(input); // Send input back to parent
+    if (searchInput.trim()) {
+      navigate(`/search/${searchInput.trim()}`);
+      setSearchInput("");
     }
   };
+
 
   return (
     <div className="flex flex-col h-screen">
@@ -40,8 +45,8 @@ function TopBar({ onSearch }) {
               className="w-xl h-[40px] mt-1 border border-gray-700 rounded-l-4xl p-3 text-lg "
               type="text"
               placeholder="Search"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
             />
             <div className="bg-gray-100 h-10 w-14 mt-1 rounded-r-full cursor-pointer ">
               <button type="submit">
