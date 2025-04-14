@@ -1,6 +1,8 @@
 import ReactPlayer from "react-player";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import TopBar from "../component/TopBar";
+import SideBar from "../component/SideBar";
 
 const API_KEY = "AIzaSyC6kuE00v2qYG8gGZXLNhCSxxpHrwCU96c";
 
@@ -65,7 +67,13 @@ function VideoPlayer() {
   if (!videoId) return <p>No video selected</p>; // Don't show anything if no video is selected
 
   return (
-    <div className="flex flex-col w-full h-full mt-10 ml-20">
+    <div className="flex flex-col h-screen">
+    <TopBar />
+
+    <div className="flex flex-1 ">
+      <SideBar />
+
+    <div className="flex flex-col w-full h-full mt-8 ml-20">
       <ReactPlayer
         controls={true}
         url={`https://www.youtube.com/watch?v=${videoId}`}
@@ -102,7 +110,7 @@ function VideoPlayer() {
         {comments.length > 0 ? (
           <ul className="space-y-4">
             {comments.map((comment, index) => (
-             <li key={index} className="bg-gray-100 p-4 rounded shadow-sm">
+              <li key={index} className="bg-gray-100 p-4 rounded shadow-sm">
                 <p className="font-medium">
                   {comment.snippet.topLevelComment.snippet.authorDisplayName}
                 </p>
@@ -111,9 +119,11 @@ function VideoPlayer() {
             ))}
           </ul>
         ) : (
-            <p>No comments available</p>
+          <p>No comments available</p>
         )}
       </div>
+    </div>
+    </div>
     </div>
   );
 }

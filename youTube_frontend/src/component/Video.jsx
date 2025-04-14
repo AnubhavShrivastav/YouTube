@@ -54,7 +54,7 @@ const RandomVideos = ({ searchQuery }) => {
   }, [searchQuery]);
 
   return (
-    <div className="flex-1 p-4 overflow-auto">
+    <div className="flex-1 p-4 mt-4 overflow-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
         {videos.map((video) => (
           <div

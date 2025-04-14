@@ -3,12 +3,12 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 function TopBar() {
   const [searchInput, setSearchInput] = useState("");
+  const { query } = useParams();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -19,6 +19,11 @@ function TopBar() {
     }
   };
 
+  useEffect(() => {
+    if (query) {
+      setSearchInput(query);
+    }
+  }, [query]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -50,7 +55,10 @@ function TopBar() {
             />
             <div className="bg-gray-100 h-10 w-14 mt-1 rounded-r-full cursor-pointer ">
               <button type="submit">
-                <img src="images/search-1.svg" className="w-5 h-10 ml-3 cursor-pointer" />
+                <img
+                  src="images/search-1.svg"
+                  className="w-5 h-10 ml-3 cursor-pointer"
+                />
               </button>
             </div>
           </div>

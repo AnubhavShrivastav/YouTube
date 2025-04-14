@@ -65,7 +65,7 @@ const SearchResults = () => {
               {videos.map((video) => (
                 <div
                   key={video.id}
-                  className="border p-2 rounded cursor-pointer"
+                  className=" p-2 rounded cursor-pointer"
                   onClick={() => navigate(`/watch/${video.id}`)}
                 >
                   <img
