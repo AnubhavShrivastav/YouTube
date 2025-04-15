@@ -12,7 +12,6 @@ const SearchResults = () => {
   const [pageToken, setPageToken] = useState("");
   const navigate = useNavigate();
 
-  
   const fetchSearchResults = async () => {
     try {
       let url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&part=snippet&type=video&maxResults=10&q=${query}`;
@@ -21,7 +20,7 @@ const SearchResults = () => {
       const res = await fetch(url);
       const data = await res.json();
 
-      const videoIds = data.items.map(item => item.id.videoId).join(",");
+      const videoIds = data.items.map((item) => item.id.videoId).join(",");
 
       if (!videoIds) return;
 
@@ -30,7 +29,7 @@ const SearchResults = () => {
       );
       const statsData = await statsRes.json();
 
-      const formatted = statsData.items.map(video => ({
+      const formatted = statsData.items.map((video) => ({
         id: video.id,
         title: video.snippet.title,
         thumbnail: video.snippet.thumbnails.high.url,
@@ -38,18 +37,17 @@ const SearchResults = () => {
         viewCount: video.statistics.viewCount,
       }));
 
-      setVideos(prev => [...prev, ...formatted]);
+      setVideos((prev) => [...prev, ...formatted]);
       setPageToken(data.nextPageToken || "");
-
     } catch (err) {
       console.error("Search error:", err);
     }
   };
 
   useEffect(() => {
-    setVideos([]);          // Clear old videos on new search
-    setPageToken("");       // Reset page token
-    fetchSearchResults();   // Load first page
+    setVideos([]); // Clear old videos on new search
+    setPageToken(""); // Reset page token
+    fetchSearchResults(); // Load first page
   }, [query]);
   return (
     <>
@@ -82,10 +80,13 @@ const SearchResults = () => {
                   </p>
                 </div>
               ))}
-            
             </div>
-            <button onClick={fetchSearchResults} className="mt-10 px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600">Load More</button>
-
+            <button
+              onClick={fetchSearchResults}
+              className="mt-10 px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600"
+            >
+              Load More
+            </button>
           </div>
         </div>
       </div>

@@ -37,8 +37,10 @@ function SideBar() {
         </div>
 
         <div className="flex flex-col items-center hover:bg-gray-200 rounded-xl p-2 cursor-pointer">
+          <Link to="/history">
           <HistoryIcon fontSize="medium" />
-          <small className="text-xs mt-1">History</small>
+          <small className="text-xs mt-1 block">History</small>
+          </Link>
         </div>
       </div>
     </div>

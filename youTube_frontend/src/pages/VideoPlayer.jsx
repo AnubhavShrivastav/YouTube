@@ -66,6 +66,16 @@ function VideoPlayer() {
 
   if (!videoId) return <p>No video selected</p>; // Don't show anything if no video is selected
 
+  useEffect(() => {
+    if (videoId) {
+      const existingHistory = JSON.parse(localStorage.getItem("videoHistory")) || [];
+      const newEntry = { id: videoId, viewedAt: new Date() };
+      const updatedHistory = [newEntry, ...existingHistory.filter(v => v.id !== videoId)];
+      localStorage.setItem("videoHistory", JSON.stringify(updatedHistory));
+    }
+  }, [videoId]);
+  
+
   return (
     <div className="flex flex-col h-screen">
     <TopBar />
