@@ -68,72 +68,80 @@ function VideoPlayer() {
 
   useEffect(() => {
     if (videoId) {
-      const existingHistory = JSON.parse(localStorage.getItem("videoHistory")) || [];
+      const existingHistory =
+        JSON.parse(localStorage.getItem("videoHistory")) || [];
       const newEntry = { id: videoId, viewedAt: new Date() };
-      const updatedHistory = [newEntry, ...existingHistory.filter(v => v.id !== videoId)];
+      const updatedHistory = [
+        newEntry,
+        ...existingHistory.filter((v) => v.id !== videoId),
+      ];
       localStorage.setItem("videoHistory", JSON.stringify(updatedHistory));
     }
   }, [videoId]);
-  
 
   return (
     <div className="flex flex-col h-screen">
-    <TopBar />
+      <TopBar />
 
-    <div className="flex flex-1 ">
-      <SideBar />
+      <div className="flex flex-1 ">
+        <SideBar />
 
-    <div className="flex flex-col w-full h-full mt-8 ml-20">
-      <ReactPlayer
-        controls={true}
-        url={`https://www.youtube.com/watch?v=${videoId}`}
-        height={500}
-        width={900}
-      />
-      <h1 className="text-xl font-bold mb-4 mt-5">{videoTitle}</h1>
+        <div className="flex flex-col w-full h-full mt-8 ml-20">
+          <ReactPlayer
+            controls={true}
+            url={`https://www.youtube.com/watch?v=${videoId}`}
+            height={500}
+            width={900}
+          />
+          <h1 className="text-xl font-bold mb-4 mt-5">{videoTitle}</h1>
 
-      <div className="bg-gray-50  rounded-2xl p-3">
-        <p className="text-gray-600 text-sm mb-1">By: {channelName}</p>
-        <p className="text-gray-500 text-sm mb-2">
-          {Number(viewCount).toLocaleString()} views •{" "}
-          {Number(LikeCount).toLocaleString()} likes
-        </p>
+          <div className="bg-gray-50  rounded-2xl p-3">
+            <p className="text-gray-600 text-sm mb-1">By: {channelName}</p>
+            <p className="text-gray-500 text-sm mb-2">
+              {Number(viewCount).toLocaleString()} views •{" "}
+              {Number(LikeCount).toLocaleString()} likes
+            </p>
 
-        <p className="text-sm text-gray-500 mt-1">Published on {publishDate}</p>
+            <p className="text-sm text-gray-500 mt-1">
+              Published on {publishDate}
+            </p>
 
-        <p className="text-gray-700 text-sm mb-4 whitespace-pre-line">
-          {showFullDescription
-            ? description
-            : `${description.slice(0, 150)}...`}
-        </p>
+            <p className="text-gray-700 text-sm mb-4 whitespace-pre-line">
+              {showFullDescription
+                ? description
+                : `${description.slice(0, 150)}...`}
+            </p>
+          </div>
+
+          <button
+            onClick={toggleDescription}
+            className="flex start-0 text-blue-500 text-sm mt-1 focus:outline-none"
+          >
+            {showFullDescription ? "Show less" : "Show more"}
+          </button>
+
+          <div className="mt-6 max-w-4xl">
+            <h2 className="text-lg font-semibold mb-2">Top Comments</h2>
+            {comments.length > 0 ? (
+              <ul className="space-y-4">
+                {comments.map((comment, index) => (
+                  <li key={index} className="bg-gray-100 p-4 rounded shadow-sm">
+                    <p className="font-medium">
+                      {
+                        comment.snippet.topLevelComment.snippet
+                          .authorDisplayName
+                      }
+                    </p>
+                    <p>{comment.snippet.topLevelComment.snippet.textDisplay}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No comments available</p>
+            )}
+          </div>
+        </div>
       </div>
-
-      <button
-        onClick={toggleDescription}
-        className="flex start-0 text-blue-500 text-sm mt-1 focus:outline-none"
-      >
-        {showFullDescription ? "Show less" : "Show more"}
-      </button>
-
-      <div className="mt-6 max-w-4xl">
-        <h2 className="text-lg font-semibold mb-2">Top Comments</h2>
-        {comments.length > 0 ? (
-          <ul className="space-y-4">
-            {comments.map((comment, index) => (
-              <li key={index} className="bg-gray-100 p-4 rounded shadow-sm">
-                <p className="font-medium">
-                  {comment.snippet.topLevelComment.snippet.authorDisplayName}
-                </p>
-                <p>{comment.snippet.topLevelComment.snippet.textDisplay}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No comments available</p>
-        )}
-      </div>
-    </div>
-    </div>
     </div>
   );
 }
